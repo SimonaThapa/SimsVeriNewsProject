@@ -8,7 +8,7 @@ import './Chatbot.css'
 export default function Chatbot() {
   const [open, setOpen]     = useState(false)
   const [msgs, setMsgs]     = useState([
-    { role: 'bot', text: <><FluentIcon name="hand" size={20} style={{marginRight:8}} /> Hi! I'm <strong>SimsVeriBot</strong>. Ask me about fake news, how to verify claims, or trusted sources!</> }
+    { role: 'bot', text: <><FluentIcon name="hand" size={20} style={{marginRight:8}} /> Hi! I'm <strong>SimsVeriBot</strong>. Ask me about fake news, AI accuracy, points, or the TruthGuard system!</> }
   ])
   const [input, setInput]   = useState('')
   const [loading, setLoading] = useState(false)
@@ -71,7 +71,7 @@ export default function Chatbot() {
             <input
               className="form-input" value={input}
               onChange={e => setInput(e.target.value)} onKeyDown={onKey}
-              placeholder="Ask about fake news..."
+              placeholder="Ask about fake news or the system..."
             />
             <button className="btn btn-primary btn-sm" onClick={send} disabled={!input.trim() || loading}>
               {loading ? <div className="spinner" style={{width:16,height:16,borderWidth:2}} /> : <FluentIcon name="send" size={18} />}
@@ -79,8 +79,8 @@ export default function Chatbot() {
           </div>
 
           <div className="chatbot-chips">
-            {['How to detect?', 'Trusted sources', 'What is bias?'].map(q => (
-              <button key={q} className="chip" onClick={() => { setInput(q); }}>{q}</button>
+            {['How to detect?', 'AI Accuracy', 'How to earn points?', 'Badges', 'Support'].map(q => (
+              <button key={q} className="chip" onClick={() => { setInput(q); send(); }}>{q}</button>
             ))}
           </div>
         </div>
