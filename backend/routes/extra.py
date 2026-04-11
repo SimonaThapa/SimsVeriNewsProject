@@ -427,12 +427,19 @@ RESPONSES = {
     "confirmation":    "Confirmation bias is our tendency to seek out and believe information that confirms what we already think. To fight it: deliberately read perspectives you disagree with, and check your emotional reaction — if a story makes you very angry or very happy, fact-check it extra carefully.",
     "points":          "You earn +10 points for every claim where your guess (Real or Fake) matches the AI result. Build a streak of correct guesses to earn the Streak Master badge! Check the Leaderboard to see how you rank against other users.",
     "model":           "SimsVeriNews uses a Linear SVM (Support Vector Machine) model trained on 44,898 real and fake news articles. It achieves 99.27% accuracy on our test set. The model analyses linguistic patterns, word frequencies, and writing style using TF-IDF vectorisation.",
+    "accuracy":        "Our AI model (Linear SVM) is 99.27% accurate on our test dataset. However, no AI is perfect—always exercise critical thinking and cross-reference multiple sources for important news!",
+    "badges":          "Earn badges like 'Streak Master', 'Fact Finder', and 'Century Club' by using the system! Check your profile collection to see your achievements and how to earn them.",
+    "leaderboard":     "The leaderboard ranks users by their total points. Compete with others to become the top truth-seeker in the TruthGuard community!",
+    "profile":         "In your profile, you can update your name, email, avatar, and password. It also shows your total points, current streak, and earned badges.",
+    "support":         "If you have questions or issues, use the 'Contact' page to send a message to the administrators. We're here to help!",
+    "mission":         "TruthGuard (SimsVeriNews) aims to empower users with AI tools and education to identify misinformation and stop the spread of fake news.",
+    "password":        "You can change your password by going to the Profile page and entering a new password in the update form.",
 }
 
 DEFAULT_RESPONSE = (
-    "I can help you understand fake news! Try asking me about: "
-    "how to detect fake news, trusted sources, media bias, deepfakes, "
-    "confirmation bias, how the AI model works, or how points are earned."
+    "I can help you understand fake news and the TruthGuard system! Try asking me about: "
+    "how to detect fake news, AI accuracy, trusted sources, points & badges, "
+    "the leaderboard, profile management, or how to contact support."
 )
 
 
