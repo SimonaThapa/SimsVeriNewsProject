@@ -1,0 +1,6 @@
+{
+  "accuracy": 0.9958,
+  "model": "LinearSVC+Calibrated",
+  "train": 35918,
+  "test": 8980
+}
