@@ -28,8 +28,7 @@ export default function UserLayout() {
     <div className="user-layout">
       <aside className="sidebar">
         <div className="sidebar-brand">
-          <img src={logo} alt="SimsVeriNews" style={{ width: 28, height: 28 }} />
-          <span>SimsVeriNews</span>
+          <span className="brand-text" style={{ color: '#ffffff' }}>SimsVeriNews</span>
         </div>
 
         <div className="sidebar-user">
@@ -55,8 +54,8 @@ export default function UserLayout() {
         <div style={{ marginTop: 'auto', paddingBottom: '10px', padding: '0 16px' }}>
           <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--gray-500)', marginBottom: '8px', textTransform: 'uppercase' }}>Theme</div>
           <div style={{ paddingBottom: '16px', borderBottom: '1px solid var(--gray-200)', marginBottom: '12px' }}>
-            <select 
-              value={theme} 
+            <select
+              value={theme}
               onChange={(e) => setTheme(e.target.value)}
               style={{
                 width: '100%', padding: '8px', borderRadius: 'var(--radius-sm)',
@@ -71,7 +70,7 @@ export default function UserLayout() {
               ))}
             </select>
           </div>
-          
+
           <button className="sidebar-logout" onClick={() => { logout(); navigate('/') }} style={{ marginTop: '0' }}>
             <LogOut size={18} style={{ marginRight: 10 }} /> Log Out
           </button>
