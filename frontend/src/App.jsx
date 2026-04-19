@@ -64,6 +64,7 @@ function AppRoutes() {
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
       <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
+      <Route path="/reviews" element={<ReviewsPage />} />
 
       {/* ── User ── */}
       <Route path="/dashboard" element={<ProtectedRoute role="user"><UserLayout /></ProtectedRoute>}>
@@ -96,9 +97,7 @@ function AppRoutes() {
       <Route path="/profile" element={<ProtectedRoute role="user"><UserLayout /></ProtectedRoute>}>
         <Route index element={<ProfilePage />} />
       </Route>
-      <Route path="/reviews" element={<ProtectedRoute role="user"><UserLayout /></ProtectedRoute>}>
-        <Route index element={<ReviewsPage />} />
-      </Route>
+
 
       {/* ── Admin ── */}
       <Route path="/admin-dashboard" element={<ProtectedRoute role="admin"><AdminLayout /></ProtectedRoute>}>
