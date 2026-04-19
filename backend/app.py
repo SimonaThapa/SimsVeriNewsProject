@@ -29,6 +29,7 @@ from routes.notifications import notif_bp
 from routes.extra         import quiz_bp, trends_bp, edu_bp, chatbot_bp
 from routes.admin         import admin_bp
 from routes.contact       import contact_bp
+from routes.reviews       import reviews_bp
 
 app.register_blueprint(auth_bp,       url_prefix='/api/auth')
 app.register_blueprint(detection_bp,  url_prefix='/api/detect')
@@ -40,6 +41,7 @@ app.register_blueprint(edu_bp,        url_prefix='/api/educational')
 app.register_blueprint(chatbot_bp,    url_prefix='/api/chatbot')
 app.register_blueprint(admin_bp,      url_prefix='/api/admin')
 app.register_blueprint(contact_bp,    url_prefix='/api/contact')
+app.register_blueprint(reviews_bp,    url_prefix='/api/reviews')
 
 # ── Health check ──────────────────────────────────────────────────────────────
 @app.route('/')
