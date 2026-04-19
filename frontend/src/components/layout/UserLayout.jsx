@@ -16,6 +16,7 @@ const NAV = [
   { to: '/leaderboard', icon: <Trophy size={18} />, label: 'Leaderboard' },
   { to: '/notifications', icon: <Bell size={18} />, label: 'Notifications' },
   { to: '/profile', icon: <User size={18} />, label: 'Profile' },
+  { to: '/reviews', icon: <Star size={18} />, label: 'Reviews' },
   { to: '/contact', icon: <MessageCircle size={18} />, label: 'Support' },
 ]
 

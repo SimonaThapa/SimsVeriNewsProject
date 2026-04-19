@@ -12,6 +12,7 @@ const ADMIN_NAV = [
   { to: '/admin/quiz',          icon: '🎯', label: 'Manage Quiz' },
   { to: '/admin/educational',   icon: '📚', label: 'Educational' },
   { to: '/admin/messages',      icon: '✉️', label: 'Support Messages' },
+  { to: '/admin/reviews',       icon: '⭐', label: 'Manage Reviews' },
 ]
 
 export default function AdminLayout() {

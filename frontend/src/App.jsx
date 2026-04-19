@@ -21,6 +21,7 @@ import EducationalPage from './pages/user/EducationalPage.jsx'
 import LeaderboardPage from './pages/user/LeaderboardPage.jsx'
 import ProfilePage from './pages/user/ProfilePage.jsx'
 import TrendingClaimsPage from './pages/user/TrendingClaimsPage.jsx'
+import ReviewsPage from './pages/user/ReviewsPage.jsx'
 
 // Admin pages
 import AdminDashboard from './pages/admin/AdminDashboard.jsx'
@@ -30,6 +31,7 @@ import ManageNotifications from './pages/admin/ManageNotifications.jsx'
 import ManageQuiz from './pages/admin/ManageQuiz.jsx'
 import ManageEducational from './pages/admin/ManageEducational.jsx'
 import ManageMessages from './pages/admin/ManageMessages.jsx'
+import ManageReviews from './pages/admin/ManageReviews.jsx'
 
 // Layouts
 import UserLayout from './components/layout/UserLayout.jsx'
@@ -94,6 +96,9 @@ function AppRoutes() {
       <Route path="/profile" element={<ProtectedRoute role="user"><UserLayout /></ProtectedRoute>}>
         <Route index element={<ProfilePage />} />
       </Route>
+      <Route path="/reviews" element={<ProtectedRoute role="user"><UserLayout /></ProtectedRoute>}>
+        <Route index element={<ReviewsPage />} />
+      </Route>
 
       {/* ── Admin ── */}
       <Route path="/admin-dashboard" element={<ProtectedRoute role="admin"><AdminLayout /></ProtectedRoute>}>
@@ -116,6 +121,9 @@ function AppRoutes() {
       </Route>
       <Route path="/admin/messages" element={<ProtectedRoute role="admin"><AdminLayout /></ProtectedRoute>}>
         <Route index element={<ManageMessages />} />
+      </Route>
+      <Route path="/admin/reviews" element={<ProtectedRoute role="admin"><AdminLayout /></ProtectedRoute>}>
+        <Route index element={<ManageReviews />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

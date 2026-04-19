@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Navbar from '../../components/ui/Navbar.jsx'
 import Footer from '../../components/ui/Footer.jsx'
 import FluentIcon from '../../components/ui/FluentIcon.jsx'
+import ReviewsSection from '../../components/ui/ReviewsSection.jsx'
 import './HomePage.css'
 
 const FEATURES = [
@@ -98,6 +99,21 @@ export default function HomePage() {
                 <p>{f.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Community Reviews ── */}
+      <section className="section">
+        <div className="page-container">
+          <div className="section-head">
+            <span className="section-tag">Testimonials</span>
+            <h2 className="section-title">Community Feedback</h2>
+            <p className="section-sub">Join thousands of users who trust TruthGuard for their daily news verification.</p>
+          </div>
+          <ReviewsSection showForm={true} limit={3} />
+          <div style={{textAlign: 'center', marginTop: 40}}>
+            <Link to="/reviews" className="btn btn-outline-primary">View All Reviews →</Link>
           </div>
         </div>
       </section>

@@ -35,7 +35,7 @@ export default function TrendsPage() {
       <div className="grid-3 fade-up delay-1" style={{marginTop:24}}>
         {[
           { label:'Total Real',      value: totals.Real,      color:'var(--green-600)', icon:<FluentIcon name="check" size={24} /> },
-          { label:'Total Fake',      value: totals.Fake,      color:'var(--red-50)',   icon:<FluentIcon name="cross" size={24} /> },
+          { label:'Total Fake',      value: totals.Fake,      color:'var(--red-600)',   icon:<FluentIcon name="cross" size={24} /> },
           { label:'Uncertain',       value: totals.Uncertain, color:'var(--yellow-500)',icon:<FluentIcon name="warning" size={24} /> },
         ].map(s => (
           <div key={s.label} className="stat-card">
