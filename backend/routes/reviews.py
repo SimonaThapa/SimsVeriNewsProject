@@ -1,6 +1,6 @@
 """routes/reviews.py — User ratings and messages."""
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import get_jwt_identity, jwt_required, get_jwt
 from bson import ObjectId
 from datetime import datetime
 from db import get_collection
@@ -10,6 +10,7 @@ reviews_bp = Blueprint('reviews', __name__)
 reviews_bp.strict_slashes = False
 
 @reviews_bp.route('/', methods=['POST'])
+@jwt_required(optional=True)
 def create_review():
     uid = get_jwt_identity()
     data = request.get_json() or {}
@@ -119,7 +120,10 @@ def toggle_like(rid):
         col.update_one({"_id": ObjectId(rid)}, {"$addToSet": {"likes": ObjectId(uid)}})
         liked = True
     
-    return jsonify({"liked": liked, "count": col.find_one({"_id": ObjectId(rid)}).get('likes', [])})
+    updated_rev = col.find_one({"_id": ObjectId(rid)})
+    likes_list = [str(l) for l in updated_rev.get('likes', [])]
+    
+    return jsonify({"liked": liked, "likes": likes_list, "count": len(likes_list)})
 
 @reviews_bp.route('/<rid>/comment', methods=['POST'])
 @require_auth
@@ -205,8 +209,28 @@ def admin_list_reviews():
     return jsonify(formatted)
 
 @reviews_bp.route('/<rid>', methods=['DELETE'])
-@require_admin
+@require_auth
 def delete_review(rid):
-    get_collection('reviews').delete_one({"_id": ObjectId(rid)})
-    return jsonify({"message": "Review deleted successfully"})
+    uid = get_jwt_identity()
+    claims = get_jwt()
+    is_admin = claims.get("role") == "admin"
+    
+    col = get_collection('reviews')
+    try:
+        rev = col.find_one({"_id": ObjectId(rid)})
+    except:
+        return jsonify({"error": "Invalid Review ID"}), 400
+        
+    if not rev:
+        return jsonify({"error": "Review not found"}), 404
+        
+    # Check permission: Admin OR Owner
+    # Note: Guest reviews (userId=None) can only be deleted by admin
+    is_owner = rev.get('userId') and str(rev['userId']) == str(uid)
+    
+    if is_admin or is_owner:
+        col.delete_one({"_id": ObjectId(rid)})
+        return jsonify({"message": "Review deleted successfully"})
+    
+    return jsonify({"error": "Unauthorized to delete this review"}), 403
 
