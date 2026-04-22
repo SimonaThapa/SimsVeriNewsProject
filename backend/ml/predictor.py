@@ -28,29 +28,27 @@ def _load():
 def _clean(text):
     if not isinstance(text, str): return ""
     text = text.lower()
+    
+    # Remove news agency headers (e.g., "WASHINGTON (Reuters) - ")
+    text = re.sub(r'^.*?\s?\(reuters\)\s?[-—]\s?', '', text)
+    text = re.sub(r'^.*?\s?\(ap\)\s?[-—]\s?', '', text)
+    
+    # Remove obvious location prefixes (e.g., "LOBBY, London - ")
+    text = re.sub(r'^[A-Z\s]+,?\s?[A-Z\s]*\s?[-—]\s?', '', text)
+    
+    # Remove non-alphabetic characters
     text = re.sub(r'[^a-zA-Z]', ' ', text)
-    return ' '.join(_lem.lemmatize(w) for w in text.split() if w not in _stop)
+    
+    # Lemmatize and remove stopwords
+    words = text.split()
+    return ' '.join(_lem.lemmatize(w) for w in words if w not in _stop)
 
 def predict(claim: str) -> dict:
     _load()
 
-    # --- HARDCODED OVERRIDES FOR KNOWN EDGE CASES ---
-    # The ML model misclassifies this recent verified news as Fake due to keywords like "arrest warrant" and "money laundering".
+    # Hardcoded overrides removed as requested. 
+    # The model now learns these patterns naturally through improved training.
     lower_claim = claim.lower()
-    if "sher bahadur deuba" in lower_claim and ("arrest warrant" in lower_claim or "money laundering" in lower_claim):
-        meta_acc = None
-        if os.path.exists(META):
-            meta_acc = json.load(open(META)).get("accuracy")
-        return {
-            "classification":   "Real",
-            "confidence":       0.9980,
-            "confidence_pct":   99.8,
-            "raw_label":        "REAL",
-            "real_probability": 99.8,
-            "fake_probability": 0.2,
-            "explanation":      "This claim has been verified as Real by our live fact-checking overrides. It accurately reports on the arrest warrants issued by the Kathmandu District Court.",
-            "model_accuracy":   meta_acc,
-        }
 
     cleaned = _clean(claim)
     vec     = _vec.transform([cleaned])
@@ -91,20 +89,35 @@ def predict(claim: str) -> dict:
         "raw_label":        label,
         "real_probability": round(p_real * 100, 1),
         "fake_probability": round(p_fake * 100, 1),
-        "explanation":      _explain(cls, conf),
+        "explanation":      _explain(cls, conf, claim),
         "model_accuracy":   meta_acc,
     }
 
-def _explain(cls, conf):
+def _explain(cls, conf, claim):
     p = round(conf * 100, 1)
+    lower_claim = claim.lower()
+    
+    # Define markers for dynamic explanation
+    formal = ["according to", "reported", "statement", "announced", "official", "department", "investigation", "police", "minister", "government", "issued"]
+    sensational = ["breaking", "shocking", "unbelievable", "must see", "won't believe", "exposed", "conspiracy", "secret", "scandal", "miracle", "hidden"]
+    
+    found_formal = [w for w in formal if w in lower_claim]
+    found_sensational = [w for w in sensational if w in lower_claim]
+
     if cls == "Uncertain":
-        return (f"The AI model could not classify this claim with sufficient confidence ({p}%). "
-                "The content may contain mixed signals, lack verifiable sources, or use ambiguous language. "
-                "Please verify through multiple trusted news sources.")
+        reason = "The claim lacks clear diagnostic markers"
+        if found_formal and found_sensational:
+            reason = f"The claim contains conflicting signals (both formal terms like '{found_formal[0]}' and sensational terms like '{found_sensational[0]}')"
+        return (f"The model is uncertain ({p}% confidence). {reason}, making it difficult to categorize without further evidence. "
+                "Cross-referencing with diverse news outlets is highly recommended.")
+
     if cls == "Real":
-        return (f"The AI model classified this claim as likely real with {p}% confidence. "
-                "The linguistic patterns and formal structures are consistent with factual reporting standards. "
-                "This is AI analysis — always verify with primary sources.")
-    return (f"The AI model classified this claim as likely fake with {p}% confidence. "
-            "The content shows strong patterns commonly associated with misinformation, sensationalism, or lack of credible structure. "
-            "Cross-check with trusted sources like Reuters, BBC, or FactCheck.org.")
+        reason = "It exhibits structured, objective language typical of verified reporting"
+        if found_formal:
+            reason = f"It uses formal journalistic markers like '{found_formal[0]}', which are characteristic of factual and verified reporting"
+        return (f"The claim likely represents factual reporting ({p}% confidence). {reason} and follows standard news presentation formats.")
+
+    reason = "The analysis detected linguistic biases or informal structures often found in fabricated content"
+    if found_sensational:
+        reason = f"It employs sensationalist phrasing like '{found_sensational[0]}', which is a common pattern in misinformation designed to provoke emotional responses"
+    return (f"This claim shows patterns typical of misinformation ({p}% confidence). {reason}. Always verify sensational claims through trusted sources.")

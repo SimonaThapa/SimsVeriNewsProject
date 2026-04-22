@@ -2,7 +2,7 @@
 """
 ml/train_model.py — Train Fake News Detection Model
 =====================================================
-Based on your Fake_News_Detector.ipynb notebook.
+
 
 DATASET SETUP — place these two files inside backend/ml/:
   • True.csv                (real news — columns: title, text, subject, date)
@@ -14,11 +14,10 @@ MODEL RESULTS (from your notebook):
   Random Forest        98.53%
   SVM (LinearSVC)      99.27%  ← BEST → saved
 
-RUN:
-  cd backend
+
   python ml/train_model.py
 """
-import os, sys, re, json, joblib
+import os, sys, re, json, joblibsni
 import pandas as pd
 import numpy as np
 
@@ -50,8 +49,21 @@ _lem  = WordNetLemmatizer()
 def preprocess(text):
     if not isinstance(text, str): return ""
     text = text.lower()
+    
+    # Remove news agency headers (e.g., "WASHINGTON (Reuters) - ")
+    # This is a major source of data leakage in fake news datasets
+    text = re.sub(r'^.*?\s?\(reuters\)\s?[-—]\s?', '', text)
+    text = re.sub(r'^.*?\s?\(ap\)\s?[-—]\s?', '', text)
+    
+    # Remove obvious location prefixes (e.g., "LOBBY, London - ")
+    text = re.sub(r'^[A-Z\s]+,?\s?[A-Z\s]*\s?[-—]\s?', '', text)
+    
+    # Remove non-alphabetic characters
     text = re.sub(r'[^a-zA-Z]', ' ', text)
-    return ' '.join(_lem.lemmatize(w) for w in text.split() if w not in _stop)
+    
+    # Lemmatize and remove stopwords
+    words = text.split()
+    return ' '.join(_lem.lemmatize(w) for w in words if w not in _stop)
 
 def train():
     print("=" * 60)
@@ -78,8 +90,9 @@ def train():
         df['clean'], df['label'], test_size=0.2, random_state=42, stratify=df['label'])
     print(f"      Train:{len(X_train)}  Test:{len(X_test)}")
 
-    print("\n[3/5] Vectorizing (TF-IDF)…")
-    vec = TfidfVectorizer(max_features=50000, max_df=0.7, min_df=5, stop_words='english')
+    print("\n[3/5] Vectorizing (TF-IDF with Bigrams)…")
+    # Using n-grams (1, 2) to capture phrases like "according to" or "breaking news"
+    vec = TfidfVectorizer(max_features=40000, max_df=0.8, min_df=10, ngram_range=(1, 2))
     Xtr = vec.fit_transform(X_train)
     Xte = vec.transform(X_test)
 
@@ -95,16 +108,16 @@ def train():
 
     svm = CalibratedClassifierCV(LinearSVC(max_iter=2000), cv=3); svm.fit(Xtr, y_train)
     acc = accuracy_score(y_test, svm.predict(Xte))
-    print(f"      SVM (LinearSVC):     {acc*100:.2f}%  ← BEST → saving")
+    print(f"      SVM (LinearSVC):     {acc*100:.2f}%  -- BEST -- saving")
 
     print("\n[5/5] Saving model + vectorizer…")
     joblib.dump(svm, MODEL); joblib.dump(vec, VEC)
     json.dump({"accuracy": round(acc,4), "model": "LinearSVC+Calibrated",
                "train": len(X_train), "test": len(X_test)}, open(META,'w'), indent=2)
 
-    print(f"\n  ✓ model.pkl       → {MODEL}")
-    print(f"  ✓ vectorizer.pkl  → {VEC}")
-    print(f"  ✓ Accuracy: {acc*100:.2f}%")
+    print(f"\n  [OK] model.pkl       => {MODEL}")
+    print(f"  [OK] vectorizer.pkl  => {VEC}")
+    print(f"  [OK] Accuracy: {acc*100:.2f}%")
     print("=" * 60)
 
 if __name__ == "__main__": train()
