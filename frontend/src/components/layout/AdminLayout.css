@@ -1,45 +1,128 @@
-.admin-layout { display: flex; min-height: 100vh; background: var(--gray-50); }
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--gray-50);
+}
+
 .admin-sidebar {
-  width: 250px; min-height: 100vh;
+  width: 250px;
+  min-height: 100vh;
   background: linear-gradient(180deg, var(--gray-900), var(--gray-800));
-  display: flex; flex-direction: column; padding: 24px 16px;
-  position: sticky; top: 0; flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  position: sticky;
+  top: 0;
+  flex-shrink: 0;
 }
+
 .admin-brand {
-  display: flex; align-items: center; gap: 10px;
-  font-family: var(--font-display); font-weight: 800; font-size: 18px;
-  color: white; padding: 0 8px; margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 18px;
+  color: white;
+  padding: 0 8px;
+  margin-bottom: 28px;
 }
+
 .admin-user {
-  display: flex; align-items: center; gap: 12px;
-  background: rgba(255,255,255,.07); border-radius: var(--radius-md);
-  padding: 12px; margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, .07);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  margin-bottom: 24px;
 }
+
 .admin-avatar {
-  width: 38px; height: 38px; background: var(--orange-500);
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  font-weight: 700; color: white; font-size: 16px;
+  width: 38px;
+  height: 38px;
+  background: var(--orange-500);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: white;
+  font-size: 16px;
 }
-.admin-username { color: white; font-weight: 600; font-size: 14px; }
+
+.admin-username {
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+}
+
 .admin-role-badge {
-  font-size: 10px; color: var(--orange-400); font-weight: 700;
-  text-transform: uppercase; letter-spacing: .06em;
+  font-size: 10px;
+  color: var(--orange-400);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
 }
-.admin-nav { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+
+.admin-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
 .admin-link {
-  display: flex; align-items: center; gap: 10px;
-  padding: 11px 12px; border-radius: var(--radius-md);
-  color: rgba(255,255,255,.6); font-size: 14px; font-weight: 500;
-  text-decoration: none; transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px;
+  border-radius: var(--radius-md);
+  color: rgba(255, 255, 255, .6);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all var(--transition);
 }
-.admin-link:hover { background: rgba(255,255,255,.08); color: white; }
-.admin-link.active { background: var(--orange-500); color: white; font-weight: 600; }
-.admin-link-icon { font-size: 18px; width: 22px; text-align: center; }
+
+.admin-link:hover {
+  background: rgba(255, 255, 255, .08);
+  color: white;
+}
+
+.admin-link.active {
+  background: var(--orange-500);
+  color: white;
+  font-weight: 600;
+}
+
+.admin-link-icon {
+  font-size: 18px;
+  width: 22px;
+  text-align: center;
+}
+
 .admin-logout {
-  margin-top: 20px; padding: 11px 12px; border-radius: var(--radius-md);
-  background: none; color: rgba(255,255,255,.45); font-size: 14px;
-  cursor: pointer; transition: all var(--transition); border: none;
-  font-family: var(--font-body); text-align: left; width: 100%;
+  margin-top: 20px;
+  padding: 11px 12px;
+  border-radius: var(--radius-md);
+  background: none;
+  color: rgba(255, 255, 255, .45);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all var(--transition);
+  border: none;
+  font-family: var(--font-body);
+  text-align: left;
+  width: 100%;
 }
-.admin-logout:hover { color: #fca5a5; background: rgba(239,68,68,.15); }
-.admin-main { flex: 1; min-width: 0; }
+
+.admin-logout:hover {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, .15);
+}
+
+.admin-main {
+  flex: 1;
+  min-width: 0;
+}

@@ -26,7 +26,10 @@
   padding: 0 8px;
   margin-bottom: 28px;
 }
-.brand-text { color: #ffffff !important; }
+
+.brand-text {
+  color: #ffffff !important;
+}
 
 .sidebar-user {
   display: flex;

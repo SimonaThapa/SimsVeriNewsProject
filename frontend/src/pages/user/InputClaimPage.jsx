@@ -122,7 +122,7 @@ export default function InputClaimPage() {
           </button>
 
           <p className="submit-note">
-            Analysis takes 1–2 seconds. The AI model achieves <strong>99.27% accuracy</strong> on our test set.
+            Analysis takes 1–2 seconds. The AI model achieves <strong>99.29% accuracy</strong> on our test set.
           </p>
         </div>
 
@@ -133,7 +133,7 @@ export default function InputClaimPage() {
             <div className="ai-steps">
               {[
                 { icon:<FluentIcon name="sparkles" size={20} />, text:'Your claim is cleaned: lowercase, lemmatized, stopwords removed' },
-                { icon:<FluentIcon name="chart" size={20} />, text:'Converted to TF-IDF numerical features (50,000 dimensions)' },
+                { icon:<FluentIcon name="chart" size={20} />, text:'Converted to TF-IDF numerical features (40,000 dimensions)' },
                 { icon:<FluentIcon name="brain" size={20} />, text:'SVM model classifies as Real or Fake with calibrated confidence' },
                 { icon:<FluentIcon name="graph" size={20} />, text:'Confidence score shows how certain the model is (>60% = confident)' },
               ].map((s,i) => (

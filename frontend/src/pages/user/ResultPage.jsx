@@ -268,7 +268,7 @@ export default function ResultPage() {
         <div className="disclaimer">
           <span className="disclaimer-icon"><FluentIcon name="warning" size={24} /></span>
           <div>
-            <strong>Important Disclaimer:</strong> This result is generated using AI and supporting sources. The AI model achieves 99.27% test accuracy but is not infallible. <strong>Please verify using trusted sources</strong> such as Reuters, BBC, AP News, FactCheck.org, or PolitiFact before sharing or acting on this information. AI analysis should complement — not replace — critical thinking.
+            <strong>Important Disclaimer:</strong> This result is generated using AI and supporting sources. The AI model achieves 99.29% test accuracy but is not infallible. <strong>Please verify using trusted sources</strong> such as Reuters, BBC, AP News, FactCheck.org, or PolitiFact before sharing or acting on this information. AI analysis should complement — not replace — critical thinking.
           </div>
         </div>
       </div>
